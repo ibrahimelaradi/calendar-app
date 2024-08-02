@@ -1,0 +1,25 @@
+<main>
+  <div class="card">
+    <h1>Sign In</h1>
+    <form [formGroup]="signInFormControl" (ngSubmit)="onSubmitSignInForm()">
+      <tui-input formControlName="username">
+        Username
+        <input
+          placeholder="Type your username.."
+          tuiTextfield
+          formControlName="username"
+        />
+      </tui-input>
+      <tui-input-password formControlName="password">
+        Password
+        <input placeholder="Type your password.." tuiTextfield />
+      </tui-input-password>
+      <div class="buttons">
+        <button tuiButton appearance="secondary" (click)="onSignUpClick()">
+          Sign Up
+        </button>
+        <button tuiButton type="submit">Sign In</button>
+      </div>
+    </form>
+  </div>
+</main>
