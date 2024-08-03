@@ -23,4 +23,8 @@ export class AuthService {
   logIn(values: LoginParams) {
     return this.client.logIn(values);
   }
+
+  logOut() {
+    return this.client.logOut();
+  }
 }

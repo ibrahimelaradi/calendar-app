@@ -17,7 +17,7 @@ export class ClientService {
 
   signUp(values: SignupParams) {
     return this.client
-      .post<void>(`${this.baseUrl}/auth/signup`, values, {
+      .post(`${this.baseUrl}/auth/signup`, values, {
         withCredentials: true,
       })
       .pipe(catchError(ClientError.handleError));
@@ -25,7 +25,15 @@ export class ClientService {
 
   logIn(values: LoginParams) {
     return this.client
-      .post<void>(`${this.baseUrl}/auth/login`, values, {
+      .post(`${this.baseUrl}/auth/login`, values, {
+        withCredentials: true,
+      })
+      .pipe(catchError(ClientError.handleError));
+  }
+
+  logOut() {
+    return this.client
+      .post(`${this.baseUrl}/auth/logout`, null, {
         withCredentials: true,
       })
       .pipe(catchError(ClientError.handleError));

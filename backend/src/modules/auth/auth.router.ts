@@ -24,7 +24,8 @@ authRouter.post("/signup", async (req, res) => {
     res.cookie("accessToken", tokens.accessToken, cookieConfig);
     res.cookie("refreshToken", tokens.refreshToken, cookieConfig);
 
-    res.sendStatus(201);
+    res.status(201);
+    res.end();
   } catch (e) {
     if (e instanceof ValidationError) {
       return res.status(400).json(e.toJson());
@@ -46,7 +47,8 @@ authRouter.post("/login", async (req, res) => {
     res.cookie("accessToken", tokens.accessToken, cookieConfig);
     res.cookie("refreshToken", tokens.refreshToken, cookieConfig);
 
-    res.sendStatus(200);
+    res.status(201);
+    res.end();
   } catch (e) {
     if (e instanceof ValidationError) {
       return res.status(400).json(e.toJson());
@@ -55,6 +57,17 @@ authRouter.post("/login", async (req, res) => {
     return res.status(500).json({ message: "Unknown error" });
   }
 });
+
+authRouter.post(
+  "/logout",
+  passport.authenticate("cookie", { session: false }),
+  async (req, res) => {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.status(200);
+    res.end();
+  }
+);
 
 authRouter.get(
   "/profile",

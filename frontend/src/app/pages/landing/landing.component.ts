@@ -57,8 +57,9 @@ export class LandingComponent {
     const values = this.signInForm.value as LoginParams;
 
     this.auth.logIn(values).subscribe({
-      next() {
-        router.navigate(['/home']);
+      complete() {
+        console.log('should go to home');
+        router.navigate(['/home'], { replaceUrl: true });
       },
       error(err) {
         if (err instanceof ClientError) {
