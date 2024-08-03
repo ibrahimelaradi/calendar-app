@@ -1,0 +1,19 @@
+main {
+  @apply h-screen w-screen flex flex-col items-center justify-center;
+}
+
+.card {
+  @apply bg-gray-lighter w-full md:w-[40vw] lg:w-[25vw] px-8 py-4 rounded-xl flex flex-col gap-y-4;
+}
+
+.card h1 {
+  @apply text-2xl font-bold text-brand-dark;
+}
+
+.card form {
+  @apply flex flex-col gap-y-2;
+}
+
+.card .buttons {
+  @apply flex flex-row gap-x-2 justify-end;
+}
