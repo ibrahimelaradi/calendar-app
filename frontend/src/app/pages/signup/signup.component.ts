@@ -21,6 +21,7 @@ import { AuthService } from '../../auth/auth.service';
 import { SignupParams } from '@calendar-app/schemas/dtos/auth.dto';
 import { AsyncPipe } from '@angular/common';
 import { ClientError } from '../../client/client-error';
+import { mapClientErrorToFormGroupControls } from '../../utils/form-control';
 
 @Component({
   selector: 'app-signup',
@@ -83,22 +84,14 @@ export class SignupComponent {
     this.router.navigate(['/signin']);
   }
 
-  handleClientError(err: ClientError) {
-    if (err.errors) {
-      for (const [field, errors] of Object.entries(err.errors)) {
-        this.signupForm.get(field)?.setErrors({ server: errors });
-      }
-    }
-  }
-
   onSignUpSubmit() {
     if (!this.signupForm.valid) return;
-    const errorHandler = this.handleClientError.bind(this);
+    const errorHandler = mapClientErrorToFormGroupControls(this.signupForm);
     const router = this.router;
     const { passwordConfirm, ...values } = this.signupForm.value;
     this.auth.signUp(values as SignupParams).subscribe({
-      next() {
-        router.navigate(['/home']);
+      complete() {
+        router.navigate(['/home'], { replaceUrl: true });
       },
       error(err) {
         if (err instanceof ClientError) {

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import authDal from "./auth.dal";
-import { SignupParams } from "@calendar-app/schemas/dtos/auth.dto";
+import { LoginParams, SignupParams } from "@calendar-app/schemas/dtos/auth.dto";
 import jwt from "../common/jwt";
 import { ValidationError } from "../common/error";
 
@@ -25,8 +25,34 @@ const authService = {
 
     return jwt.createTokens(userId);
   },
+  async login(params: LoginParams) {
+    const user = await authDal.getUserByUsername(params.username);
+
+    if (!user) {
+      throw ValidationError.make("Invalid username or password")
+        .addError("username", "Invalid username or password")
+        .addError("password", "Invalid username or password");
+    }
+
+    const isValidPassword = await this.verifyPassword(
+      params.password,
+      user.passwordHash
+    );
+
+    if (!isValidPassword) {
+      throw ValidationError.make("Invalid username or password")
+        .addError("username", "Invalid username or password")
+        .addError("password", "Invalid username or password");
+    }
+
+    return jwt.createTokens(user.id);
+  },
   async resolveUserById(userId: string) {
     return authDal.getUserById(userId);
+  },
+  refreshTokens(refreshToken: string) {
+    const { userId } = jwt.verifyRefreshToken(refreshToken);
+    return jwt.createTokens(userId);
   },
 };
 
