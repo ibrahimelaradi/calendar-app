@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  LoginParamsSchema,
   SignupParamsSchema,
   UserDtoSchema,
 } from "@calendar-app/schemas/dtos/auth.dto";
@@ -24,6 +25,28 @@ authRouter.post("/signup", async (req, res) => {
     res.cookie("refreshToken", tokens.refreshToken, cookieConfig);
 
     res.sendStatus(201);
+  } catch (e) {
+    if (e instanceof ValidationError) {
+      return res.status(400).json(e.toJson());
+    }
+    console.error(e);
+    return res.status(500).json({ message: "Unknown error" });
+  }
+});
+
+authRouter.post("/login", async (req, res) => {
+  const problem = validateWithSchema(LoginParamsSchema, req.body);
+  if (problem) {
+    return res.status(400).json(problem.toJson());
+  }
+
+  try {
+    const tokens = await authService.login(req.body);
+
+    res.cookie("accessToken", tokens.accessToken, cookieConfig);
+    res.cookie("refreshToken", tokens.refreshToken, cookieConfig);
+
+    res.sendStatus(200);
   } catch (e) {
     if (e instanceof ValidationError) {
       return res.status(400).json(e.toJson());
