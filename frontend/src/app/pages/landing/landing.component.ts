@@ -4,10 +4,21 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TuiButtonModule } from '@taiga-ui/core';
-import { TuiInputModule, TuiInputPasswordModule } from '@taiga-ui/kit';
+import { LoginParams } from '@calendar-app/schemas/dtos/auth.dto';
+import { TuiButtonModule, TuiErrorModule } from '@taiga-ui/core';
+import {
+  TuiFieldErrorPipeModule,
+  TuiInputModule,
+  TuiInputPasswordModule,
+} from '@taiga-ui/kit';
+import { mapClientErrorToFormGroupControls } from '../../utils/form-control';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../auth/auth.service';
+import { ClientError } from '../../client/client-error';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-landing',
@@ -18,20 +29,43 @@ import { TuiInputModule, TuiInputPasswordModule } from '@taiga-ui/kit';
     TuiInputPasswordModule,
     TuiInputModule,
     TuiButtonModule,
+    AsyncPipe,
+    TuiErrorModule,
+    TuiFieldErrorPipeModule,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
 export class LandingComponent {
-  signInFormControl = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
+  signInForm = new FormGroup(
+    {
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+    },
+    { updateOn: 'submit' }
+  );
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   onSubmitSignInForm() {
-    // TODO Implement sign in form submission
+    if (this.signInForm.invalid) {
+      return;
+    }
+
+    const router = this.router;
+    const errorHandler = mapClientErrorToFormGroupControls(this.signInForm);
+    const values = this.signInForm.value as LoginParams;
+
+    this.auth.logIn(values).subscribe({
+      next() {
+        router.navigate(['/home']);
+      },
+      error(err) {
+        if (err instanceof ClientError) {
+          errorHandler(err);
+        }
+      },
+    });
   }
 
   onSignUpClick() {

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ClientService } from '../client/client.service';
-import { SignupParams, UserDto } from '@calendar-app/schemas/dtos/auth.dto';
+import {
+  LoginParams,
+  SignupParams,
+  UserDto,
+} from '@calendar-app/schemas/dtos/auth.dto';
 import { first, map, Observable, retry } from 'rxjs';
 
 @Injectable({
@@ -14,5 +18,9 @@ export class AuthService {
 
   signUp(values: SignupParams) {
     return this.client.signUp(values);
+  }
+
+  logIn(values: LoginParams) {
+    return this.client.logIn(values);
   }
 }

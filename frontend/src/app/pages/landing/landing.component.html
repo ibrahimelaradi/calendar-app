@@ -1,7 +1,7 @@
 <main>
   <div class="card">
     <h1>Sign In</h1>
-    <form [formGroup]="signInFormControl" (ngSubmit)="onSubmitSignInForm()">
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmitSignInForm()">
       <tui-input formControlName="username">
         Username
         <input
@@ -10,10 +10,18 @@
           formControlName="username"
         />
       </tui-input>
+      <tui-error
+        formControlName="username"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
       <tui-input-password formControlName="password">
         Password
         <input placeholder="Type your password.." tuiTextfield />
       </tui-input-password>
+      <tui-error
+        formControlName="password"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
       <div class="buttons">
         <button tuiButton type="submit">Sign In</button>
         <button tuiButton appearance="secondary" (click)="onSignUpClick()">
