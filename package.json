@@ -1,0 +1,21 @@
+{
+  "name": "calendar-app",
+  "version": "1.0.0",
+  "repository": "git@github.com:ibrahimelaradi/calendar-app",
+  "author": "Ibrahim Elaradi <ibrahimelaradi@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "backend": "yarn workspace @calendar-app/backend",
+    "frontend": "yarn workspace @calendar-app/frontend",
+    "build:schema": "yarn workspace @calendar-app/schemas build"
+  },
+  "workspaces": [
+    "backend",
+    "frontend",
+    "schemas"
+  ],
+  "devDependencies": {
+    "@sinclair/typebox": "^0.32.35"
+  }
+}

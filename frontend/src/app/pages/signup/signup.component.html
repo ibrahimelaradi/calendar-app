@@ -1,24 +1,44 @@
 <main>
   <div class="card">
     <h1>Sign Up</h1>
-    <form>
+    <form [formGroup]="signupForm" (ngSubmit)="onSignUpSubmit()">
       <tui-input formControlName="username">
         Username
-        <input
-          placeholder="Type your username.."
-          tuiTextfield
-          formControlName="username"
-        />
+        <input placeholder="Type your username.." tuiTextfield />
       </tui-input>
+      <tui-error
+        formControlName="username"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+      <tui-input formControlName="email">
+        Email
+        <input placeholder="Type your email.." tuiTextfield />
+      </tui-input>
+      <tui-error
+        formControlName="email"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
       <tui-input-password formControlName="password">
         Password
         <input placeholder="Type your password.." tuiTextfield />
       </tui-input-password>
+      <tui-error
+        formControlName="password"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+      <tui-input-password formControlName="passwordConfirm">
+        Confirm Password
+        <input placeholder="Confirm your password.." tuiTextfield />
+      </tui-input-password>
+      <tui-error
+        formControlName="passwordConfirm"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
       <div class="buttons">
+        <button tuiButton type="submit">Sign Up</button>
         <button tuiButton appearance="secondary" (click)="onSignInClick()">
           Sign In
         </button>
-        <button tuiButton type="submit">Sign Up</button>
       </div>
     </form>
   </div>

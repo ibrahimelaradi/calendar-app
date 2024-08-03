@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiInputModule } from '@taiga-ui/kit';
+import { AuthModule } from './auth/auth.module';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { TuiInputModule } from '@taiga-ui/kit';
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
+    AuthModule,
   ],
   templateUrl: './app.component.html',
 })
