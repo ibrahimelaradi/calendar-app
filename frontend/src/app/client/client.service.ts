@@ -16,32 +16,24 @@ export class ClientService {
   constructor(private client: HttpClient) {}
 
   signUp(values: SignupParams) {
-    return this.client
-      .post(`${this.baseUrl}/auth/signup`, values, {
-        withCredentials: true,
-      })
-      .pipe(catchError(ClientError.handleError));
+    return this.client.post(`${this.baseUrl}/auth/signup`, values);
   }
 
   logIn(values: LoginParams) {
-    return this.client
-      .post(`${this.baseUrl}/auth/login`, values, {
-        withCredentials: true,
-      })
-      .pipe(catchError(ClientError.handleError));
+    return this.client.post(`${this.baseUrl}/auth/login`, values);
+  }
+
+  refresh() {
+    return this.client.post(`${this.baseUrl}/auth/refresh`, null, {
+      withCredentials: true,
+    });
   }
 
   logOut() {
-    return this.client
-      .post(`${this.baseUrl}/auth/logout`, null, {
-        withCredentials: true,
-      })
-      .pipe(catchError(ClientError.handleError));
+    return this.client.post(`${this.baseUrl}/auth/logout`, null);
   }
 
   profile() {
-    return this.client
-      .get<UserDto>(`${this.baseUrl}/auth/profile`, { withCredentials: true })
-      .pipe(catchError(ClientError.handleError));
+    return this.client.get<UserDto>(`${this.baseUrl}/auth/profile`);
   }
 }

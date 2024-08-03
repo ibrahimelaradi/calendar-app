@@ -50,6 +50,10 @@ const authService = {
   async resolveUserById(userId: string) {
     return authDal.getUserById(userId);
   },
+  refreshTokens(refreshToken: string) {
+    const { userId } = jwt.verifyRefreshToken(refreshToken);
+    return jwt.createTokens(userId);
+  },
 };
 
 export default authService;

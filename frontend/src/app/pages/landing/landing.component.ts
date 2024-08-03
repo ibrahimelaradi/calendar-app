@@ -58,7 +58,6 @@ export class LandingComponent {
 
     this.auth.logIn(values).subscribe({
       complete() {
-        console.log('should go to home');
         router.navigate(['/home'], { replaceUrl: true });
       },
       error(err) {

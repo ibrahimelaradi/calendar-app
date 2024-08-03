@@ -24,6 +24,10 @@ export class AuthService {
     return this.client.logIn(values);
   }
 
+  refresh() {
+    return this.client.refresh();
+  }
+
   logOut() {
     return this.client.logOut();
   }

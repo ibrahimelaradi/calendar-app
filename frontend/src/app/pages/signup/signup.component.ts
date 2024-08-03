@@ -91,7 +91,6 @@ export class SignupComponent {
     const { passwordConfirm, ...values } = this.signupForm.value;
     this.auth.signUp(values as SignupParams).subscribe({
       complete() {
-        console.log('should go to home');
         router.navigate(['/home'], { replaceUrl: true });
       },
       error(err) {
