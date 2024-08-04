@@ -1,0 +1,29 @@
+nav {
+  @apply bg-brand h-16 flex flex-row items-center justify-stretch p-2;
+}
+
+.drawer-toggle-btn {
+  @apply aspect-square flex items-center justify-center h-full text-white rounded-full bg-white bg-opacity-0
+    transition-colors hover:bg-opacity-10;
+}
+
+.drawer {
+  @apply h-[calc(100vh-4rem)] fixed top-[4rem] start-0 w-72 bg-brand-light
+    transition-transform duration-300 ease-in-out -translate-x-full;
+}
+
+.drawer.open {
+  @apply translate-x-0;
+}
+
+main {
+  @apply h-[calc(100vh-4rem)] w-screen overflow-hidden;
+}
+
+.drawer + main {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.drawer.open + main {
+  @apply ps-72;
+}

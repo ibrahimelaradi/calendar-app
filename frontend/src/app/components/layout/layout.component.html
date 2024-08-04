@@ -1,0 +1,9 @@
+<nav>
+  <button class="drawer-toggle-btn" (click)="toggleDrawer()">
+    <tui-svg src="tuiIconMenuLarge"></tui-svg>
+  </button>
+</nav>
+<div class="drawer" [class.open]="drawerOpen"></div>
+<main>
+  <ng-content></ng-content>
+</main>
