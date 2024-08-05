@@ -17,8 +17,35 @@ declare module "knex/types/tables" {
 		Pick<User, "username" | "passwordHash" | "email" | "fullName" | "birthDate">
 	> &
 		Pick<User, "updatedAt">;
+
+	interface UserEvent {
+		id: string;
+		userId: string;
+		title: string;
+		description: string | null;
+		startDate: Date;
+		endDate: Date;
+		isReoccurring: boolean;
+		isPublic: boolean;
+		createdAt: Date;
+		updatedAt: Date;
+	}
+	type UserEventInsert = Pick<UserEvent, "userId", "title" | "start" | "end"> &
+		Partial<Pick<UserEvent, "description" | "isReoccurring" | "isPublic">>;
+	type UserEventUpdate = Partial<
+		Pick<
+			UserEvent,
+			"title" | "description" | "start" | "end" | "isReoccurring" | "isPublic"
+		>
+	> &
+		Pick<UserEvent, "updatedAt">;
 	interface Tables {
 		users: Knex.CompositeTableType<User, UserInsert, UserUpdate>;
+		events: Knex.CompositeTableType<
+			UserEvent,
+			UserEventInsert,
+			UserEventUpdate
+		>;
 	}
 }
 
