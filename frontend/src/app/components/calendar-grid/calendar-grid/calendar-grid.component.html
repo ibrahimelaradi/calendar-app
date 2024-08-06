@@ -1,0 +1,5 @@
+<div class="w-full h-full grid grid-cols-7 grid-rows-5">
+  @for (slot of calendarSlots; track slot) {
+  <app-calendar-grid-item [slot]="slot"></app-calendar-grid-item>
+  }
+</div>

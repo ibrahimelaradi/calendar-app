@@ -3,7 +3,17 @@
     <tui-svg src="tuiIconMenuLarge"></tui-svg>
   </button>
 </nav>
-<div class="drawer" [class.open]="drawerOpen"></div>
+<div class="drawer" [class.open]="drawerOpen">
+  <div class="flex-1"></div>
+  <button
+    tuiButton
+    appearance="secondary-destructive"
+    icon="tuiIconLogOutLarge"
+    (click)="onLogout()"
+  >
+    Logout
+  </button>
+</div>
 <main>
   <ng-content></ng-content>
 </main>

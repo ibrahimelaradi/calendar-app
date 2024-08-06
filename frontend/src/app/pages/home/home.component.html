@@ -1,3 +1,6 @@
 <app-layout>
-  <app-calendar-grid></app-calendar-grid>
+  <app-calendar-grid
+    [month]="7"
+    [events]="events$ | async | emptyArrayIfNull"
+  ></app-calendar-grid>
 </app-layout>

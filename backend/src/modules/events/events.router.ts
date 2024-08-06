@@ -3,7 +3,10 @@ import { castWithSchema } from "../common/utils";
 import { FiltersSchema } from "@calendar-app/schemas/dtos/filters";
 import eventsService from "./events.service";
 import { protect } from "../../passport";
-import { CreateEventParamsSchema } from "@calendar-app/schemas/dtos/events.dto";
+import {
+	CreateEventParamsSchema,
+	EventDtoSchema,
+} from "@calendar-app/schemas/dtos/events.dto";
 
 const eventsRouter = Router();
 
@@ -12,7 +15,9 @@ eventsRouter.get(
 	protect(async (req, res) => {
 		const filters = castWithSchema(FiltersSchema, req.query);
 		const events = await eventsService.getUserEvents(req.user!.userId, filters);
-		res.status(200).json(events);
+		res
+			.status(200)
+			.json(events.map(castWithSchema.bind(undefined, EventDtoSchema)));
 	})
 );
 
@@ -26,7 +31,7 @@ eventsRouter.get(
 		if (!event) {
 			return res.status(404).end();
 		}
-		res.status(200).json(event);
+		res.status(200).json(castWithSchema(EventDtoSchema, event));
 	})
 );
 
@@ -35,7 +40,7 @@ eventsRouter.post(
 	protect(async (req, res) => {
 		const data = castWithSchema(CreateEventParamsSchema, req.body);
 		const event = await eventsService.createUserEvent(req.user!.userId, data);
-		res.status(201).json(event);
+		res.status(201).json(castWithSchema(EventDtoSchema, event));
 	})
 );
 
@@ -51,7 +56,7 @@ eventsRouter.put(
 		if (!event) {
 			return res.status(404).end();
 		}
-		res.status(200).json(event);
+		res.status(200).json(castWithSchema(EventDtoSchema, event));
 	})
 );
 
@@ -65,7 +70,7 @@ eventsRouter.delete(
 		if (!event) {
 			return res.status(404).end();
 		}
-		res.status(200).json(event);
+		res.status(200).json(castWithSchema(EventDtoSchema, event));
 	})
 );
 
