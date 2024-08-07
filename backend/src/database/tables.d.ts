@@ -22,13 +22,13 @@ declare module "knex/types/tables" {
 		id: string;
 		userId: string;
 		title: string;
-		description: string | null;
+		description: Date | string | null;
 		startDate: Date;
-		endDate: Date;
+		endDate: string;
 		isReoccurring: boolean;
 		isPublic: boolean;
-		createdAt: Date;
-		updatedAt: Date;
+		createdAt: Date | string;
+		updatedAt: Date | string;
 	}
 	type UserEventInsert = Pick<UserEvent, "userId", "title" | "start" | "end"> &
 		Partial<Pick<UserEvent, "description" | "isReoccurring" | "isPublic">>;

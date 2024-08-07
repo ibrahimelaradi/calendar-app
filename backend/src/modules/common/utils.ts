@@ -24,3 +24,17 @@ export function castWithSchema<T extends TSchema>(
 ): Static<T> {
 	return Value.Cast(schema, value);
 }
+
+export function encodeWithSchema<T extends TSchema>(
+	schema: T,
+	value: unknown
+): Static<T> {
+	return Value.Encode(schema, value);
+}
+
+export function decodeWithSchema<T extends TSchema>(
+	schema: T,
+	value: unknown
+): Static<T> {
+	return Value.Decode(schema, value);
+}

@@ -3,6 +3,14 @@
     <tui-svg src="tuiIconMenuLarge"></tui-svg>
   </button>
 </nav>
+<div class="side-modal" [class.open]="sideModalOpen">
+  <ng-content select="#side-modal"></ng-content>
+</div>
+<div
+  class="back-drop"
+  [class.open]="sideModalOpen"
+  (click)="onBackdropClick()"
+></div>
 <div class="drawer" [class.open]="drawerOpen">
   <div class="flex-1"></div>
   <button

@@ -1,5 +1,9 @@
 <div class="w-full h-full grid grid-cols-7 grid-rows-5">
   @for (slot of calendarSlots; track slot) {
-  <app-calendar-grid-item [slot]="slot"></app-calendar-grid-item>
+  <app-calendar-grid-item
+    [slot]="slot"
+    (click)="onSlotClick(slot.date)"
+    (eventClick)="eventClick.emit($event)"
+  ></app-calendar-grid-item>
   }
 </div>

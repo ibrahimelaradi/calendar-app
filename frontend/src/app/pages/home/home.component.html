@@ -1,6 +1,26 @@
-<app-layout>
+<app-layout [sideModalOpen]="eventFormOpen">
   <app-calendar-grid
     [month]="7"
     [events]="events$ | async | emptyArrayIfNull"
-  ></app-calendar-grid>
+    (slotClick)="onCalendarSlotClick($event)"
+    (eventClick)="onEventClick($event)"
+  />
+  <div id="side-modal">
+    <h1 class="text-xl font-bold text-brand-dark mb-4">
+      @if (lastSelectedEvent) { Edit an Event } @else { Create an Event }
+    </h1>
+    <app-event-form
+      [date]="lastSelectedDate"
+      [event]="lastSelectedEvent"
+      (submitEventParams)="onCreateEventSubmit($event)"
+    ></app-event-form>
+    <button
+      tuiButton
+      appearance="secondary-destructive"
+      class="w-full mt-2"
+      (click)="closeEventFormSidebar()"
+    >
+      Cancel
+    </button>
+  </div>
 </app-layout>

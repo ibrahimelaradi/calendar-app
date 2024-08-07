@@ -17,28 +17,16 @@ const eventsService = {
 		return ev && ev.userId === userId ? ev : undefined;
 	},
 	async createUserEvent(userId: string, data: CreateEventParams) {
-		const { allDay, ...rest } = data;
-		if (data.allDay) {
-			data.endDate = dayjs(data.startDate).endOf("day").toDate();
-		} else if (!data.endDate) {
-			data.endDate = dayjs(data.startDate).add(1, "hour").toDate();
-		}
-		return await eventsDal.createEvent({ userId, ...rest });
+		return await eventsDal.createEvent({ userId, ...data });
 	},
 	async updateUserEvent(
 		userId: string,
 		eventId: string,
 		data: UpdateEventParams
 	) {
-		const { allDay, ...rest } = data;
-		if (data.allDay) {
-			data.endDate = dayjs(data.startDate).endOf("day").toDate();
-		} else if (!data.endDate) {
-			data.endDate = dayjs(data.startDate).add(1, "hour").toDate();
-		}
 		const results = await eventsDal.updateEvents(
 			{ userId, eventId },
-			{ ...rest, updatedAt: new Date() }
+			{ ...data, updatedAt: dayjs().toDate() }
 		);
 		return results.at(0) as UserEvent | undefined;
 	},

@@ -5,5 +5,6 @@ export type CalendarSlot = {
   date: dayjs.Dayjs;
   day: number;
   isOverflowingMonth?: boolean;
+  isToday?: boolean;
   events: EventDto[];
 };

@@ -5,7 +5,10 @@ import type {
   SignupParams,
   UserDto,
 } from '@calendar-app/schemas/dtos/auth.dto';
-import { EventDto } from '@calendar-app/schemas/dtos/events.dto';
+import {
+  CreateEventParams,
+  EventDto,
+} from '@calendar-app/schemas/dtos/events.dto';
 import { Filters } from '@calendar-app/schemas/dtos/filters';
 
 @Injectable({
@@ -41,5 +44,13 @@ export class ClientService {
     return this.client.get<EventDto[]>(`${this.baseUrl}/events`, {
       params: filters,
     });
+  }
+
+  createEvent(values: CreateEventParams) {
+    return this.client.post<EventDto>(`${this.baseUrl}/events`, values);
+  }
+
+  updateEvent(id: string, values: CreateEventParams) {
+    return this.client.put<EventDto>(`${this.baseUrl}/events/${id}`, values);
   }
 }
