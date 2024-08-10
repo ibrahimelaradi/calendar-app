@@ -16,8 +16,6 @@ import { hasIntersection, makeDayRange } from '../../../utils/dayjs';
 
 @Component({
   selector: 'app-calendar-grid',
-  standalone: true,
-  imports: [FormatAsDatePipe, AsyncPipe, CalendarGridItemComponent],
   templateUrl: './calendar-grid.component.html',
   styleUrl: './calendar-grid.component.css',
 })

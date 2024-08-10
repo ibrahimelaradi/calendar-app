@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
   standalone: true,
 })
 export class FormatAsDatePipe implements PipeTransform {
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return dayjs.isDayjs(value) ? dayjs(value).format('MMM, D') : value;
+  transform(value: string | Date | dayjs.Dayjs, ...args: unknown[]): string {
+    return dayjs(value).format('MMM, D');
   }
 }

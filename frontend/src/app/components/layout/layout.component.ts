@@ -25,6 +25,12 @@ export class LayoutComponent {
   @Input() year: number = dayjs().year();
   @Output() dateChange = new EventEmitter<[month: number, year: number]>();
 
+  @Input() view: 'calendar' | 'list' = 'calendar';
+  @Output() toggleView = new EventEmitter();
+  onToggleView() {
+    this.toggleView.emit();
+  }
+
   get dateDisplay() {
     return dayjs().month(this.month).year(this.year).format('MMMM YYYY');
   }

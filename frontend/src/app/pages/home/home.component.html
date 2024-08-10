@@ -3,7 +3,11 @@
   [month]="month"
   [year]="year"
   (dateChange)="onChangeDisplayDate($event)"
+  [view]="view"
+  (toggleView)="onToggleView()"
 >
+  @if (view === 'calendar') {
+
   <app-calendar-grid
     [month]="month"
     [year]="year"
@@ -11,6 +15,12 @@
     (slotClick)="onCalendarSlotClick($event)"
     (eventClick)="onEventClick($event)"
   />
+  } @else {
+  <app-events-list
+    [events]="events$ | async | emptyArrayIfNull"
+    (eventClick)="onEventClick($event)"
+  ></app-events-list>
+  }
   <div id="side-modal">
     <h1 class="text-xl font-bold text-brand-dark mb-4">
       @if (lastSelectedEvent) { Edit an Event } @else { Create an Event }
