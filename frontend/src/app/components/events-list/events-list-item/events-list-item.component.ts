@@ -11,6 +11,14 @@ export class EventsListItemComponent {
   @Input({ required: true }) event!: EventDto;
   @Output() click = new EventEmitter();
 
+  get isActive() {
+    const now = dayjs();
+    return (
+      dayjs(this.event.startDate).isBefore(now) &&
+      dayjs(this.event.endDate).isAfter(now)
+    );
+  }
+
   get isSameDayEvent() {
     return (
       dayjs(this.event.startDate).startOf('day').format() ===

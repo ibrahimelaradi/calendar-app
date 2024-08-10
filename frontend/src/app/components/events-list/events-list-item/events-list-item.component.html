@@ -1,6 +1,9 @@
-<div class="event-card">
+<div class="event-card" [class.active]="isActive">
   <div class="header">
-    <h1>{{ event.title }}</h1>
+    <h1>
+      {{ event.title }} @if(isActive) {
+      <span class="text-success text-sm">(Currently Actiev)</span> }
+    </h1>
   </div>
   <div class="content">
     <p>{{ event.description }}</p>
