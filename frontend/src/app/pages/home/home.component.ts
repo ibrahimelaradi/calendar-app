@@ -6,6 +6,7 @@ import { CalendarGridComponent } from '../../components/calendar-grid/calendar-g
 import {
   CreateEventParams,
   EventDto,
+  UpdateEventParams,
 } from '@calendar-app/schemas/dtos/events.dto';
 import { map, Observable, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -67,16 +68,32 @@ export class HomeComponent implements OnInit {
   }
 
   onCreateEventSubmit(values: CreateEventParams) {
-    this.events$ = this.client
-      .createEvent(values)
-      .pipe(switchMap(() => this.client.getEvents({})));
-
-    this.events$.subscribe({
-      complete: () => this.closeEventFormSidebar(),
-      error(err) {
-        // TODO Handle error
+    this.client.createEvent(values).subscribe({
+      complete: () => {
+        this.events$ = this.client.getEvents({});
+        this.closeEventFormSidebar();
       },
     });
+  }
+
+  onUpdateEventSubmit(id: string, values: UpdateEventParams) {
+    this.client.updateEvent(id, values).subscribe({
+      complete: () => {
+        this.events$ = this.client.getEvents({});
+        this.closeEventFormSidebar();
+      },
+    });
+  }
+
+  onEventFormSubmit(values: CreateEventParams | UpdateEventParams) {
+    if (this.lastSelectedEvent) {
+      this.onUpdateEventSubmit(
+        this.lastSelectedEvent.id,
+        values as UpdateEventParams
+      );
+      return;
+    }
+    this.onCreateEventSubmit(values as CreateEventParams);
   }
 
   onLogOutClick() {

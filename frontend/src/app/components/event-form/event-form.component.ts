@@ -88,7 +88,8 @@ export class EventFormComponent implements OnChanges {
       const start = dayjs(changes['event'].currentValue.startDate);
       const end = dayjs(changes['event'].currentValue.endDate);
       const allDay =
-        start.isSame(start.startOf('day')) && end.isSame(start.endOf('day'));
+        start.format() === start.startOf('day').format() &&
+        end.format() === start.endOf('day').format();
       const values = omit(changes['event'].currentValue as EventDto, [
         'id',
         'userId',
