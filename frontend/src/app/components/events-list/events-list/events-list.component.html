@@ -1,0 +1,13 @@
+<div class="p-4">
+  @for (group of groups; track group[0]) {
+  <h1>{{ group[0] }}</h1>
+  <div class="flex flex-col gap-y-2">
+    @for (event of group[1]; track event.id) {
+    <app-events-list-item
+      [event]="event"
+      (click)="onEventClick(event)"
+    ></app-events-list-item>
+    }
+  </div>
+  }
+</div>

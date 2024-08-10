@@ -1,0 +1,13 @@
+<div class="event-card">
+  <div class="header">
+    <h1>{{ event.title }}</h1>
+  </div>
+  <div class="content">
+    <p>{{ event.description }}</p>
+  </div>
+  @if (!isSameDayEvent) {
+  <div class="ends-at-container">
+    <p>Ends at {{ event.endDate | formatAsDate }}</p>
+  </div>
+  }
+</div>

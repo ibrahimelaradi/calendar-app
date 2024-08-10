@@ -13,6 +13,13 @@
       <tui-svg src="tuiIconChevronRightLarge"></tui-svg>
     </button>
   </div>
+  <button class="nav-btn" (click)="onToggleView()">
+    @if (view === 'calendar') {
+    <tui-svg src="tuiIconCalendarLarge"></tui-svg>
+    } @else {
+    <tui-svg src="tuiIconListLarge"></tui-svg>
+    }
+  </button>
 </nav>
 <div class="side-modal" [class.open]="sideModalOpen">
   <ng-content select="#side-modal"></ng-content>

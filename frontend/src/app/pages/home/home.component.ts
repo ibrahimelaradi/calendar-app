@@ -16,23 +16,31 @@ import { CalendarSlot } from '../../components/calendar-grid/calendar-grid.commo
 import dayjs from 'dayjs';
 import { EventFormComponent } from '../../components/event-form/event-form.component';
 import { TuiButtonModule } from '@taiga-ui/core';
+import { CalendarGridModule } from '../../components/calendar-grid/calendar-grid.module';
+import { EventsListModule } from '../../components/events-list/events-list.module';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     LayoutComponent,
-    CalendarGridComponent,
     TuiButtonModule,
     AsyncPipe,
     EmptyArrayIfNullPipe,
     EventFormComponent,
+    CalendarGridModule,
+    EventsListModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   events$!: Observable<EventDto[]>;
+
+  view: 'calendar' | 'list' = 'calendar';
+  onToggleView() {
+    this.view = this.view === 'calendar' ? 'list' : 'calendar';
+  }
 
   month: number = dayjs().month();
   year: number = dayjs().year();
