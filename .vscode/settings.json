@@ -1,0 +1,7 @@
+{
+	"editor.useTabStops": true,
+	"prettier.useTabs": true,
+	"editor.tabSize": 2,
+	"prettier.tabWidth": 2,
+	"css.customData": [".vscode/tailwind.json"]
+}

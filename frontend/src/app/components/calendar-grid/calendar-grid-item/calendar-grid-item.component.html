@@ -1,0 +1,18 @@
+<div
+  class="calendar-grid-item"
+  [class.overflowing]="slot.isOverflowingMonth"
+  [class.today]="slot.isToday"
+  (click)="onClick()"
+>
+  <h1 class="month-day">
+    {{ slot.day }}
+  </h1>
+  <p class="date">{{ slot.date | formatAsDate }}</p>
+  <div class="calendar-events-container">
+    @for (event of slot.events.slice(0, 4); track event.id) {
+    <div class="calendar-event" (click)="onEventClick($event, event)">
+      {{ event.title }}
+    </div>
+    }
+  </div>
+</div>

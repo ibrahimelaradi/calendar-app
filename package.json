@@ -17,5 +17,8 @@
   ],
   "devDependencies": {
     "@sinclair/typebox": "^0.32.35"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.12"
   }
 }

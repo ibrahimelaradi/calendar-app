@@ -1,2 +1,32 @@
-<p>home works!</p>
-<button (click)="onLogOutClick()">Logout</button>
+<app-layout
+  [sideModalOpen]="eventFormOpen"
+  [month]="month"
+  [year]="year"
+  (dateChange)="onChangeDisplayDate($event)"
+>
+  <app-calendar-grid
+    [month]="month"
+    [year]="year"
+    [events]="events$ | async | emptyArrayIfNull"
+    (slotClick)="onCalendarSlotClick($event)"
+    (eventClick)="onEventClick($event)"
+  />
+  <div id="side-modal">
+    <h1 class="text-xl font-bold text-brand-dark mb-4">
+      @if (lastSelectedEvent) { Edit an Event } @else { Create an Event }
+    </h1>
+    <app-event-form
+      [date]="lastSelectedDate"
+      [event]="lastSelectedEvent"
+      (submitEventParams)="onEventFormSubmit($event)"
+    ></app-event-form>
+    <button
+      tuiButton
+      appearance="secondary-destructive"
+      class="w-full mt-2"
+      (click)="closeEventFormSidebar()"
+    >
+      Cancel
+    </button>
+  </div>
+</app-layout>

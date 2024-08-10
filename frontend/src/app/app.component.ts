@@ -2,9 +2,9 @@ import { TuiRootModule, TuiDialogModule, TuiAlertModule } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TuiInputModule } from '@taiga-ui/kit';
+import { TUI_DATE_TIME_VALUE_TRANSFORMER } from '@taiga-ui/kit';
 import { AuthModule } from './auth/auth.module';
+import { DateTimeTransformer } from './utils/tui';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,12 @@ import { AuthModule } from './auth/auth.module';
     TuiDialogModule,
     TuiAlertModule,
     AuthModule,
+  ],
+  providers: [
+    {
+      provide: TUI_DATE_TIME_VALUE_TRANSFORMER,
+      useClass: DateTimeTransformer,
+    },
   ],
   templateUrl: './app.component.html',
 })

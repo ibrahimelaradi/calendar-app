@@ -1,12 +1,15 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import type {
-  UserDto,
-  SignupParams,
   LoginParams,
+  SignupParams,
+  UserDto,
 } from '@calendar-app/schemas/dtos/auth.dto';
-import { catchError, map, Observable, of, OperatorFunction } from 'rxjs';
-import { ClientError } from './client-error';
+import {
+  CreateEventParams,
+  EventDto,
+} from '@calendar-app/schemas/dtos/events.dto';
+import { Filters } from '@calendar-app/schemas/dtos/filters';
 
 @Injectable({
   providedIn: 'root',
@@ -16,24 +19,38 @@ export class ClientService {
   constructor(private client: HttpClient) {}
 
   signUp(values: SignupParams) {
-    return this.client.post(`${this.baseUrl}/auth/signup`, values);
+    return this.client.post<void>(`${this.baseUrl}/auth/signup`, values);
   }
 
   logIn(values: LoginParams) {
-    return this.client.post(`${this.baseUrl}/auth/login`, values);
+    return this.client.post<void>(`${this.baseUrl}/auth/login`, values);
   }
 
   refresh() {
-    return this.client.post(`${this.baseUrl}/auth/refresh`, null, {
+    return this.client.post<void>(`${this.baseUrl}/auth/refresh`, null, {
       withCredentials: true,
     });
   }
 
   logOut() {
-    return this.client.post(`${this.baseUrl}/auth/logout`, null);
+    return this.client.post<void>(`${this.baseUrl}/auth/logout`, null);
   }
 
   profile() {
     return this.client.get<UserDto>(`${this.baseUrl}/auth/profile`);
+  }
+
+  getEvents(filters: Filters) {
+    return this.client.get<EventDto[]>(`${this.baseUrl}/events`, {
+      params: filters as Record<string, string>,
+    });
+  }
+
+  createEvent(values: CreateEventParams) {
+    return this.client.post<EventDto>(`${this.baseUrl}/events`, values);
+  }
+
+  updateEvent(id: string, values: CreateEventParams) {
+    return this.client.put<EventDto>(`${this.baseUrl}/events/${id}`, values);
   }
 }
