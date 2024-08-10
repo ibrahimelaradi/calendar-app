@@ -15,10 +15,22 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 			query = query.where("title", "like", `%${filters.search}%`);
 		}
 		if (filters.fromDate) {
-			query = query.where("date", ">=", filters.fromDate);
+			query = query.where(function () {
+				this.where("startDate", ">=", filters.fromDate as Date).orWhere(
+					"endDate",
+					">=",
+					filters.fromDate as Date
+				);
+			});
 		}
 		if (filters.toDate) {
-			query = query.where("date", "<", filters.toDate);
+			query = query.where(function () {
+				this.where("startDate", "<=", filters.toDate as Date).orWhere(
+					"endDate",
+					"<=",
+					filters.toDate as Date
+				);
+			});
 		}
 		return query;
 	};

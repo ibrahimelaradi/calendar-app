@@ -34,6 +34,14 @@ import { TuiButtonModule } from '@taiga-ui/core';
 export class HomeComponent implements OnInit {
   events$!: Observable<EventDto[]>;
 
+  month: number = dayjs().month();
+  year: number = dayjs().year();
+  onChangeDisplayDate([month, year]: [number, number]) {
+    this.month = month;
+    this.year = year;
+    this.fetchEventsBasedOnCurrentRange();
+  }
+
   lastSelectedEvent?: EventDto;
   lastSelectedDate?: dayjs.Dayjs;
 
@@ -53,8 +61,19 @@ export class HomeComponent implements OnInit {
     private client: ClientService
   ) {}
 
+  fetchEventsBasedOnCurrentRange() {
+    this.events$ = this.client.getEvents({
+      fromDate: dayjs()
+        .month(this.month)
+        .year(this.year)
+        .startOf('month')
+        .format(),
+      toDate: dayjs().month(this.month).year(this.year).endOf('month').format(),
+    });
+  }
+
   ngOnInit(): void {
-    this.events$ = this.client.getEvents({});
+    this.fetchEventsBasedOnCurrentRange();
   }
 
   onCalendarSlotClick(date: dayjs.Dayjs) {
@@ -70,7 +89,7 @@ export class HomeComponent implements OnInit {
   onCreateEventSubmit(values: CreateEventParams) {
     this.client.createEvent(values).subscribe({
       complete: () => {
-        this.events$ = this.client.getEvents({});
+        this.fetchEventsBasedOnCurrentRange();
         this.closeEventFormSidebar();
       },
     });
@@ -79,7 +98,7 @@ export class HomeComponent implements OnInit {
   onUpdateEventSubmit(id: string, values: UpdateEventParams) {
     this.client.updateEvent(id, values).subscribe({
       complete: () => {
-        this.events$ = this.client.getEvents({});
+        this.fetchEventsBasedOnCurrentRange();
         this.closeEventFormSidebar();
       },
     });

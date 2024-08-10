@@ -19,7 +19,7 @@ const eventsRouter = Router();
 eventsRouter.get(
 	"/",
 	protect(async (req, res) => {
-		const filters = castWithSchema(FiltersSchema, req.query);
+		const filters = decodeWithSchema(FiltersSchema, req.query);
 		const events = await eventsService.getUserEvents(req.user!.userId, filters);
 		res
 			.status(200)

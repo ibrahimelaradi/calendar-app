@@ -2,22 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDtoSchema = exports.UpdateEventParamsSchema = exports.CreateEventParamsSchema = void 0;
 const typebox_1 = require("@sinclair/typebox");
-const StringDate = typebox_1.Type.Transform(typebox_1.Type.String())
-    .Decode((date) => new Date(date))
-    .Encode((date) => date.toISOString());
+const common_1 = require("./common");
 exports.CreateEventParamsSchema = typebox_1.Type.Object({
     title: typebox_1.Type.String(),
     description: typebox_1.Type.Optional(typebox_1.Type.String()),
-    startDate: StringDate,
-    endDate: StringDate,
+    startDate: common_1.StringDate,
+    endDate: common_1.StringDate,
     isReoccurring: typebox_1.Type.Boolean(),
     isPublic: typebox_1.Type.Optional(typebox_1.Type.Boolean()),
 });
 exports.UpdateEventParamsSchema = typebox_1.Type.Object({
     title: typebox_1.Type.String(),
     description: typebox_1.Type.Optional(typebox_1.Type.String()),
-    startDate: StringDate,
-    endDate: StringDate,
+    startDate: common_1.StringDate,
+    endDate: common_1.StringDate,
     isReoccurring: typebox_1.Type.Boolean(),
     isPublic: typebox_1.Type.Optional(typebox_1.Type.Boolean()),
 });
@@ -26,10 +24,10 @@ exports.EventDtoSchema = typebox_1.Type.Object({
     userId: typebox_1.Type.String(),
     title: typebox_1.Type.String(),
     description: typebox_1.Type.Optional(typebox_1.Type.String()),
-    startDate: StringDate,
-    endDate: StringDate,
+    startDate: common_1.StringDate,
+    endDate: common_1.StringDate,
     isReoccurring: typebox_1.Type.Boolean(),
     isPublic: typebox_1.Type.Boolean(),
-    createdAt: StringDate,
-    updatedAt: StringDate,
+    createdAt: common_1.StringDate,
+    updatedAt: common_1.StringDate,
 });

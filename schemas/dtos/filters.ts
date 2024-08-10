@@ -1,9 +1,10 @@
 import { Type, Static } from "@sinclair/typebox";
+import { StringDate } from "./common";
 
 export const FiltersSchema = Type.Object({
 	search: Type.Optional(Type.String()),
-	fromDate: Type.Optional(Type.String({ format: "date" })),
-	toDate: Type.Optional(Type.String({ format: "date" })),
+	fromDate: Type.Optional(StringDate),
+	toDate: Type.Optional(StringDate),
 	userId: Type.Optional(Type.String()),
 	eventId: Type.Optional(Type.String()),
 });

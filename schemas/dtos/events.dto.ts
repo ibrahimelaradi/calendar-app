@@ -1,9 +1,5 @@
-import { Static, TSchema, Type } from "@sinclair/typebox";
-import dayjs from "dayjs";
-
-const StringDate = Type.Transform(Type.Union([Type.Date(), Type.String()]))
-	.Decode((date) => dayjs(date).toDate())
-	.Encode((date) => dayjs(date).format());
+import { Static, Type } from "@sinclair/typebox";
+import { StringDate } from "./common";
 
 export const CreateEventParamsSchema = Type.Object({
 	title: Type.String(),

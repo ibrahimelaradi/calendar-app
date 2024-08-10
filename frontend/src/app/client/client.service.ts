@@ -42,7 +42,7 @@ export class ClientService {
 
   getEvents(filters: Filters) {
     return this.client.get<EventDto[]>(`${this.baseUrl}/events`, {
-      params: filters,
+      params: filters as Record<string, string>,
     });
   }
 

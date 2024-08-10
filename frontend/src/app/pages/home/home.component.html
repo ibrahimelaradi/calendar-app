@@ -1,6 +1,12 @@
-<app-layout [sideModalOpen]="eventFormOpen">
+<app-layout
+  [sideModalOpen]="eventFormOpen"
+  [month]="month"
+  [year]="year"
+  (dateChange)="onChangeDisplayDate($event)"
+>
   <app-calendar-grid
-    [month]="7"
+    [month]="month"
+    [year]="year"
     [events]="events$ | async | emptyArrayIfNull"
     (slotClick)="onCalendarSlotClick($event)"
     (eventClick)="onEventClick($event)"

@@ -1,7 +1,18 @@
 <nav>
-  <button class="drawer-toggle-btn" (click)="toggleDrawer()">
-    <tui-svg src="tuiIconMenuLarge"></tui-svg>
-  </button>
+  <div class="drawer-togle-container">
+    <button class="nav-btn" (click)="toggleDrawer()">
+      <tui-svg src="tuiIconMenuLarge"></tui-svg>
+    </button>
+  </div>
+  <div class="date-filter-container">
+    <button class="nav-btn" (click)="decrementDate()">
+      <tui-svg src="tuiIconChevronLeftLarge"></tui-svg>
+    </button>
+    <p>{{ dateDisplay }}</p>
+    <button class="nav-btn" (click)="incrementDate()">
+      <tui-svg src="tuiIconChevronRightLarge"></tui-svg>
+    </button>
+  </div>
 </nav>
 <div class="side-modal" [class.open]="sideModalOpen">
   <ng-content select="#side-modal"></ng-content>
