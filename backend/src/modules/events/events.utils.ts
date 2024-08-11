@@ -55,7 +55,6 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 				});
 			});
 		}
-		console.log(query.toString());
 		return query;
 	};
 }
