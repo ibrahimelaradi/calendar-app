@@ -35,7 +35,7 @@ export class EventsListComponent implements OnChanges {
 
   groupEventsByDate() {
     this.groups = this.events.reduce((acc, event) => {
-      const date = dayjs(event.startDate).format('dddd, MMMM Do YYYY');
+      const date = dayjs(event.startDate).format('dddd, MMMM Do');
       const group = acc.find(([groupDate]) => groupDate === date);
       if (group) {
         group[1].push(event);

@@ -1,4 +1,5 @@
 import { Filters } from "@calendar-app/schemas/dtos/filters";
+import dayjs from "dayjs";
 import { Knex } from "knex";
 import { Tables } from "knex/types/tables";
 
@@ -15,23 +16,46 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 			query = query.where("title", "like", `%${filters.search}%`);
 		}
 		if (filters.fromDate) {
+			const month = dayjs(filters.fromDate).month() + 1;
+			const day = dayjs(filters.fromDate).date();
 			query = query.where(function () {
-				this.where("startDate", ">=", filters.fromDate as Date).orWhere(
-					"endDate",
-					">=",
-					filters.fromDate as Date
-				);
+				this.where(function () {
+					this.where("isReoccurring", false).andWhere(function () {
+						this.where("startDate", ">=", filters.fromDate as Date).orWhere(
+							"endDate",
+							">=",
+							filters.fromDate as Date
+						);
+					});
+				}).orWhere(function () {
+					this.whereRaw(
+						`("isReoccurring" = true AND date_part('month', "startDate") >= :month AND date_part('day', "startDate") >= :day)`,
+						{ month, day }
+					);
+				});
 			});
 		}
 		if (filters.toDate) {
 			query = query.where(function () {
-				this.where("startDate", "<=", filters.toDate as Date).orWhere(
-					"endDate",
-					"<=",
-					filters.toDate as Date
-				);
+				this.where(function () {
+					this.where("isReoccurring", false).andWhere(function () {
+						this.where("startDate", "<=", filters.toDate as Date).orWhere(
+							"endDate",
+							"<=",
+							filters.toDate as Date
+						);
+					});
+				}).orWhere(function () {
+					const month = dayjs(filters.toDate).month() + 1;
+					const day = dayjs(filters.toDate).date();
+					this.whereRaw(
+						`("isReoccurring" = true AND date_part('month', "endDate") <= :month AND date_part('day', "endDate") <= :day)`,
+						{ month, day }
+					);
+				});
 			});
 		}
+		console.log(query.toString());
 		return query;
 	};
 }
