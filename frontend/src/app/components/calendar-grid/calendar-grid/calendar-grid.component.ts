@@ -68,9 +68,20 @@ export class CalendarGridComponent implements OnChanges {
           day: previousMonthDays + day,
           isOverflowingMonth: true,
           isToday: today.isBefore(djs.endOf('day')) && today.isAfter(djs),
-          events: this.events.filter((e) =>
-            hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
-          ),
+          events: this.events
+            .filter(
+              (e) =>
+                !e.isReoccurring &&
+                hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
+            )
+            .concat(
+              this.events.filter(
+                (e) =>
+                  e.isReoccurring &&
+                  dayjs(e.startDate).month() === djs.month() &&
+                  dayjs(e.startDate).date() === djs.date()
+              )
+            ),
         };
       }
       if (day > monthDays) {
@@ -84,9 +95,20 @@ export class CalendarGridComponent implements OnChanges {
           day: day - monthDays,
           isOverflowingMonth: true,
           isToday: today.isBefore(djs.endOf('day')) && today.isAfter(djs),
-          events: this.events.filter((e) =>
-            hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
-          ),
+          events: this.events
+            .filter(
+              (e) =>
+                !e.isReoccurring &&
+                hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
+            )
+            .concat(
+              this.events.filter(
+                (e) =>
+                  e.isReoccurring &&
+                  dayjs(e.startDate).month() === djs.month() &&
+                  dayjs(e.startDate).date() === djs.date()
+              )
+            ),
         };
       }
       djs = date.date(day).startOf('day');
@@ -95,9 +117,20 @@ export class CalendarGridComponent implements OnChanges {
         date: date.date(day),
         day,
         isToday: today.isBefore(djs.endOf('day')) && today.isAfter(djs),
-        events: this.events.filter((e) =>
-          hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
-        ),
+        events: this.events
+          .filter(
+            (e) =>
+              !e.isReoccurring &&
+              hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
+          )
+          .concat(
+            this.events.filter(
+              (e) =>
+                e.isReoccurring &&
+                dayjs(e.startDate).month() === djs.month() &&
+                dayjs(e.startDate).date() === djs.date()
+            )
+          ),
       };
     });
   }

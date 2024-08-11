@@ -23,3 +23,6 @@
     transition-colors duration-200 ease-in-out
     hover:bg-cta/80 hover:cursor-pointer;
 }
+.calendar-event.reoccurring {
+  @apply border border-info bg-info-light text-brand-dark hover:bg-info/80;
+}
