@@ -1,4 +1,8 @@
-<div class="event-card" [class.active]="isActive">
+<div
+  class="event-card"
+  [class.active]="isActive"
+  [class.reoccurring]="event.isReoccurring"
+>
   <div class="header">
     <h1>
       {{ event.title }} @if(isActive) {
@@ -11,6 +15,10 @@
   @if (!isSameDayEvent) {
   <div class="ends-at-container">
     <p>Ends at {{ event.endDate | formatAsDate }}</p>
+  </div>
+  } @if (event.isReoccurring) {
+  <div class="reoccurring-container">
+    <tui-svg src="tuiIconRepeat"></tui-svg>
   </div>
   }
 </div>

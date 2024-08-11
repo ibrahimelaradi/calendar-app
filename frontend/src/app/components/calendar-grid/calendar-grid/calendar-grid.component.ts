@@ -69,8 +69,10 @@ export class CalendarGridComponent implements OnChanges {
           isOverflowingMonth: true,
           isToday: today.isBefore(djs.endOf('day')) && today.isAfter(djs),
           events: this.events
-            .filter((e) =>
-              hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
+            .filter(
+              (e) =>
+                !e.isReoccurring &&
+                hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
             )
             .concat(
               this.events.filter(
@@ -94,8 +96,10 @@ export class CalendarGridComponent implements OnChanges {
           isOverflowingMonth: true,
           isToday: today.isBefore(djs.endOf('day')) && today.isAfter(djs),
           events: this.events
-            .filter((e) =>
-              hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
+            .filter(
+              (e) =>
+                !e.isReoccurring &&
+                hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
             )
             .concat(
               this.events.filter(
@@ -114,8 +118,10 @@ export class CalendarGridComponent implements OnChanges {
         day,
         isToday: today.isBefore(djs.endOf('day')) && today.isAfter(djs),
         events: this.events
-          .filter((e) =>
-            hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
+          .filter(
+            (e) =>
+              !e.isReoccurring &&
+              hasIntersection(range, [dayjs(e.startDate), dayjs(e.endDate)])
           )
           .concat(
             this.events.filter(

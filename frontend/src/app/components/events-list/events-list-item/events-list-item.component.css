@@ -3,6 +3,10 @@
   transition-colors duration-300 ease-in-out
   hover:bg-gray-lighter cursor-pointer;
 }
+.event-card.reoccurring {
+  @apply bg-gray-lightest/50 border border-info
+  hover:bg-gray-lighter/50;
+}
 .event-card.active {
   @apply bg-gray-lightest/50 border border-brand
   hover:bg-gray-lighter/50;
@@ -18,4 +22,7 @@
 }
 .ends-at-container p {
   @apply text-opacity-70 text-danger;
+}
+.reoccurring-container {
+  @apply absolute top-0 end-0 p-2 translate-x-2 -translate-y-2 bg-info text-brand-dark rounded-full shadow-md;
 }
