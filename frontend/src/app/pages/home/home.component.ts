@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   fetchEventsBasedOnCurrentRange() {
-    this.events$ = this.client.getEvents({
+    this.events$ = this.client.getCalendarEvents({
       fromDate: dayjs()
         .month(this.month)
         .year(this.year)

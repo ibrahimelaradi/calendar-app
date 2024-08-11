@@ -40,8 +40,14 @@ export class ClientService {
     return this.client.get<UserDto>(`${this.baseUrl}/auth/profile`);
   }
 
+  getCalendarEvents(filters: Filters) {
+    return this.client.get<EventDto[]>(`${this.baseUrl}/events/calendar`, {
+      params: filters as Record<string, string>,
+    });
+  }
+
   getEvents(filters: Filters) {
-    return this.client.get<EventDto[]>(`${this.baseUrl}/events`, {
+    return this.client.get<EventDto[]>(`${this.baseUrl}/events/search`, {
       params: filters as Record<string, string>,
     });
   }

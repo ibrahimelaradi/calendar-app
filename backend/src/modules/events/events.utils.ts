@@ -55,6 +55,12 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 				});
 			});
 		}
+		if (filters.page && filters.pageSize) {
+			query = query
+				.limit(filters.pageSize)
+				.offset((filters.page - 1) * filters.pageSize)
+				.orderBy(filters.orderBy || "createdAt", filters.order || "desc");
+		}
 		return query;
 	};
 }

@@ -5,5 +5,7 @@ export declare const FiltersSchema: import("@sinclair/typebox").TObject<{
     toDate: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TTransform<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TDate, import("@sinclair/typebox").TString]>, Date>>;
     userId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString>;
     eventId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString>;
+    page: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
+    pageSize: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
 }>;
 export type Filters = Static<typeof FiltersSchema>;
