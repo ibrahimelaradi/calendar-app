@@ -4,6 +4,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { authGuard } from './auth/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { noAuthGuard } from './auth/no-auth.guard';
+import { SearchComponent } from './pages/search/search.component';
 
 export const routes: Routes = [
   { path: 'signin', canActivate: [noAuthGuard], component: LandingComponent },
@@ -12,6 +13,11 @@ export const routes: Routes = [
     path: 'home',
     canActivate: [authGuard],
     component: HomeComponent,
+  },
+  {
+    path: 'search',
+    canActivate: [authGuard],
+    component: SearchComponent,
   },
   {
     path: '',

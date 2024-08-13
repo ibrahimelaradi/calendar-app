@@ -135,4 +135,8 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+
+  onSearchClick() {
+    this.router.navigate(['/search']);
+  }
 }

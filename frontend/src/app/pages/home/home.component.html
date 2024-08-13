@@ -7,13 +7,18 @@
       [year]="year"
       (dateChange)="onChangeDisplayDate($event)"
     ></app-month-slider>
-    <button class="nav-btn" (click)="onToggleView()">
-      @if (view === 'calendar') {
-      <tui-svg src="tuiIconCalendarLarge"></tui-svg>
-      } @else {
-      <tui-svg src="tuiIconListLarge"></tui-svg>
-      }
-    </button>
+    <div class="h-full flex flex-row items-center gap-x-2">
+      <button class="nav-btn" (click)="onSearchClick()">
+        <tui-svg src="tuiIconSearchLarge"></tui-svg>
+      </button>
+      <button class="nav-btn" (click)="onToggleView()">
+        @if (view === 'calendar') {
+        <tui-svg src="tuiIconCalendarLarge"></tui-svg>
+        } @else {
+        <tui-svg src="tuiIconListLarge"></tui-svg>
+        }
+      </button>
+    </div>
   </app-bar-actions>
   @if (view === 'calendar') {
 
@@ -30,7 +35,7 @@
     (eventClick)="onEventClick($event)"
   ></app-events-list>
   }
-  <div id="side-modal">
+  <app-side-modal>
     <h1 class="text-xl font-bold text-brand-dark mb-4">
       @if (lastSelectedEvent) { Edit an Event } @else { Create an Event }
     </h1>
@@ -47,5 +52,5 @@
     >
       Cancel
     </button>
-  </div>
+  </app-side-modal>
 </app-layout>
