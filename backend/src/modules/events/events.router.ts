@@ -6,6 +6,7 @@ import {
 	validateWithSchema,
 } from "../common/utils";
 import { FiltersSchema } from "@calendar-app/schemas/dtos/filters";
+import { CreateInviteDtoSchema } from "@calendar-app/schemas/dtos/invites.dto";
 import eventsService from "./events.service";
 import { protect } from "../../passport";
 import {
@@ -125,6 +126,30 @@ eventsRouter.delete(
 			return res.status(404).end();
 		}
 		res.status(200).json(encodeWithSchema(EventDtoSchema, event));
+	})
+);
+
+eventsRouter.post(
+	"/:eventId/invite",
+	protect(async (req, res) => {
+		const errors = validateWithSchema(CreateInviteDtoSchema, req.body);
+		if (errors) {
+			return res.status(400).json(errors.toJson());
+		}
+		const values = castWithSchema(CreateInviteDtoSchema, req.body);
+		try {
+			await eventsService.createEventInvite(
+				req.user!.userId,
+				req.params.eventId,
+				values.userId
+			);
+			res.status(201).end();
+		} catch (e) {
+			if (e instanceof ValidationError) {
+				return res.status(400).json(e.toJson());
+			}
+			return res.status(500).json({ message: "Internal server error" });
+		}
 	})
 );
 
