@@ -4,22 +4,10 @@
       <tui-svg src="tuiIconMenuLarge"></tui-svg>
     </button>
   </div>
-  <div class="date-filter-container">
-    <button class="nav-btn" (click)="decrementDate()">
-      <tui-svg src="tuiIconChevronLeftLarge"></tui-svg>
-    </button>
-    <p>{{ dateDisplay }}</p>
-    <button class="nav-btn" (click)="incrementDate()">
-      <tui-svg src="tuiIconChevronRightLarge"></tui-svg>
-    </button>
-  </div>
-  <button class="nav-btn" (click)="onToggleView()">
-    @if (view === 'calendar') {
-    <tui-svg src="tuiIconCalendarLarge"></tui-svg>
-    } @else {
-    <tui-svg src="tuiIconListLarge"></tui-svg>
-    }
-  </button>
+  <ng-content
+    select="app-bar-actions"
+    class="h-full flex-1 flex flex-row justify-stretch items-stretch"
+  ></ng-content>
 </nav>
 <div class="side-modal" [class.open]="sideModalOpen">
   <ng-content select="#side-modal"></ng-content>

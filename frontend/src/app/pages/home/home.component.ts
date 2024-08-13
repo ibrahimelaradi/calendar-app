@@ -1,35 +1,36 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { LayoutComponent } from '../../components/layout/layout.component';
-import { CalendarGridComponent } from '../../components/calendar-grid/calendar-grid/calendar-grid.component';
 import {
   CreateEventParams,
   EventDto,
   UpdateEventParams,
 } from '@calendar-app/schemas/dtos/events.dto';
-import { map, Observable, switchMap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { ClientService } from '../../client/client.service';
-import { EmptyArrayIfNullPipe } from '../../pipes/empty-array-if-null.pipe';
-import { CalendarSlot } from '../../components/calendar-grid/calendar-grid.common';
+import { TuiButtonModule, TuiSvgModule } from '@taiga-ui/core';
 import dayjs from 'dayjs';
-import { EventFormComponent } from '../../components/event-form/event-form.component';
-import { TuiButtonModule } from '@taiga-ui/core';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
+import { ClientService } from '../../client/client.service';
 import { CalendarGridModule } from '../../components/calendar-grid/calendar-grid.module';
+import { EventFormComponent } from '../../components/event-form/event-form.component';
 import { EventsListModule } from '../../components/events-list/events-list.module';
+import { LayoutModule } from '../../components/layout/layout.module';
+import { MonthSliderComponent } from '../../components/month-slider/month-slider.component';
+import { EmptyArrayIfNullPipe } from '../../pipes/empty-array-if-null.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    LayoutComponent,
+    LayoutModule,
     TuiButtonModule,
     AsyncPipe,
     EmptyArrayIfNullPipe,
     EventFormComponent,
     CalendarGridModule,
     EventsListModule,
+    MonthSliderComponent,
+    TuiSvgModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.nav-btn {
+  @apply aspect-square flex items-center justify-center h-full text-white rounded-full bg-white bg-opacity-0
+    transition-colors hover:bg-opacity-10;
+}

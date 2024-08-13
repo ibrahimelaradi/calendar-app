@@ -1,11 +1,20 @@
-<app-layout
-  [sideModalOpen]="eventFormOpen"
-  [month]="month"
-  [year]="year"
-  (dateChange)="onChangeDisplayDate($event)"
-  [view]="view"
-  (toggleView)="onToggleView()"
->
+<app-layout [sideModalOpen]="eventFormOpen">
+  <app-bar-actions
+    class="h-full flex-1 flex flex-row items-stretch justify-between"
+  >
+    <app-month-slider
+      [month]="month"
+      [year]="year"
+      (dateChange)="onChangeDisplayDate($event)"
+    ></app-month-slider>
+    <button class="nav-btn" (click)="onToggleView()">
+      @if (view === 'calendar') {
+      <tui-svg src="tuiIconCalendarLarge"></tui-svg>
+      } @else {
+      <tui-svg src="tuiIconListLarge"></tui-svg>
+      }
+    </button>
+  </app-bar-actions>
   @if (view === 'calendar') {
 
   <app-calendar-grid
