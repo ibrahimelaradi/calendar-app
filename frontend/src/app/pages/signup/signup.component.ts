@@ -51,6 +51,7 @@ export class SignupComponent {
         nonNullable: true,
         validators: [Validators.required],
       }),
+      fullName: new FormControl(''),
       password: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required],

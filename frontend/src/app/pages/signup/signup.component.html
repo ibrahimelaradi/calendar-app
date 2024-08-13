@@ -10,6 +10,14 @@
         formControlName="username"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
+      <tui-input formControlName="fullName">
+        Name
+        <input placeholder="Type your display name.." tuiTextfield />
+      </tui-input>
+      <tui-error
+        formControlName="fullName"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
       <tui-input formControlName="email">
         Email
         <input placeholder="Type your email.." tuiTextfield />
