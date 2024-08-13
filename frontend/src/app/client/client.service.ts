@@ -15,12 +15,13 @@ import {
   EventDto,
 } from '@calendar-app/schemas/dtos/events.dto';
 import { Filters } from '@calendar-app/schemas/dtos/filters';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
-  private baseUrl = 'http://localhost:3000/api'; // TODO Use environment configuration instead
+  private baseUrl = environment.apiUrl; // TODO Use environment configuration instead
   constructor(private client: HttpClient) {}
 
   signUp(values: SignupParams) {
