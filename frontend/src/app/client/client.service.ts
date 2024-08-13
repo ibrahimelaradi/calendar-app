@@ -5,6 +5,10 @@ import type {
   SignupParams,
   UserDto,
 } from '@calendar-app/schemas/dtos/auth.dto';
+import {
+  CreateInviteDto,
+  InviteDto,
+} from '@calendar-app/schemas/dtos/invites.dto';
 import { Paged } from '@calendar-app/schemas/dtos/common';
 import {
   CreateEventParams,
@@ -59,5 +63,26 @@ export class ClientService {
 
   updateEvent(id: string, values: CreateEventParams) {
     return this.client.put<EventDto>(`${this.baseUrl}/events/${id}`, values);
+  }
+
+  createInvite(id: string, values: CreateInviteDto) {
+    return this.client.post<void>(
+      `${this.baseUrl}/events/${id}/invite`,
+      values
+    );
+  }
+
+  getInvites(filters: Filters) {
+    return this.client.get<InviteDto[]>(`${this.baseUrl}/invites`, {
+      params: filters as Record<string, string>,
+    });
+  }
+
+  acceptInvite(id: string) {
+    return this.client.post<void>(`${this.baseUrl}/invites/${id}/accept`, null);
+  }
+
+  rejectInvite(id: string) {
+    return this.client.post<void>(`${this.baseUrl}/invites/${id}/reject`, null);
   }
 }

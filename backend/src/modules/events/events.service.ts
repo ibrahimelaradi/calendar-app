@@ -6,6 +6,9 @@ import {
 import eventsDal from "./events.dal";
 import dayjs from "dayjs";
 import { UserEvent } from "knex/types/tables";
+import invitesDal from "../invites/invites.dal";
+import { ValidationError } from "../common/error";
+import usersDal from "../users/users.dal";
 
 const eventsService = {
 	async countUserEvents(userId: string, filters: Filters) {
@@ -37,6 +40,28 @@ const eventsService = {
 	async deleteUserEvent(userId: string, eventId: string) {
 		const results = await eventsDal.deleteEvents({ userId, eventId });
 		return results.at(0) as UserEvent | undefined;
+	},
+	async createEventInvite(
+		userId: string,
+		eventId: string,
+		inviteeUsername: string
+	) {
+		const event = this.getUserEvent(userId, eventId);
+		if (!event) {
+			throw new ValidationError("Event does not exist");
+		}
+		const user = await usersDal.getUserByUsername(inviteeUsername);
+		if (!user) {
+			throw new ValidationError("User does not exist").addError(
+				"username",
+				"User not found"
+			);
+		}
+		return await invitesDal.createInvite({
+			inviterId: userId,
+			eventId,
+			inviteeId: user.id,
+		});
 	},
 };
 

@@ -6,6 +6,7 @@ import {
 	validateWithSchema,
 } from "../common/utils";
 import { FiltersSchema } from "@calendar-app/schemas/dtos/filters";
+import { CreateInviteDtoSchema } from "@calendar-app/schemas/dtos/invites.dto";
 import eventsService from "./events.service";
 import { protect } from "../../passport";
 import {
@@ -18,17 +19,6 @@ import { ValidationError } from "../common/error";
 const eventsRouter = Router();
 
 eventsRouter.get(
-	"/",
-	protect(async (req, res) => {
-		const filters = decodeWithSchema(FiltersSchema, req.query);
-		const events = await eventsService.getUserEvents(req.user!.userId, filters);
-		res
-			.status(200)
-			.json(events.map(encodeWithSchema.bind(undefined, EventDtoSchema)));
-	})
-);
-
-eventsRouter.get(
 	"/calendar",
 	protect(async (req, res) => {
 		const filters = decodeWithSchema(FiltersSchema, req.query);
@@ -39,9 +29,12 @@ eventsRouter.get(
 			return res.status(400).json(err.toJson());
 		}
 		const events = await eventsService.getUserEvents(req.user!.userId, filters);
-		res
-			.status(200)
-			.json(events.map(encodeWithSchema.bind(undefined, EventDtoSchema)));
+		res.status(200).json(
+			events.map((ev) => ({
+				...castWithSchema(EventDtoSchema, ev),
+				owned: ev.userId === req.user!.userId,
+			}))
+		);
 	})
 );
 
@@ -61,7 +54,10 @@ eventsRouter.get(
 			filters
 		);
 		res.status(200).json({
-			items: events.map(encodeWithSchema.bind(undefined, EventDtoSchema)),
+			items: events.map((ev) => ({
+				...castWithSchema(EventDtoSchema, ev),
+				owned: ev.userId === req.user!.userId,
+			})),
 			count,
 		});
 	})
@@ -77,7 +73,10 @@ eventsRouter.get(
 		if (!event) {
 			return res.status(404).end();
 		}
-		res.status(200).json(encodeWithSchema(EventDtoSchema, event));
+		res.status(200).json({
+			...encodeWithSchema(EventDtoSchema, event),
+			owned: req.user!.userId,
+		});
 	})
 );
 
@@ -125,6 +124,30 @@ eventsRouter.delete(
 			return res.status(404).end();
 		}
 		res.status(200).json(encodeWithSchema(EventDtoSchema, event));
+	})
+);
+
+eventsRouter.post(
+	"/:eventId/invite",
+	protect(async (req, res) => {
+		const errors = validateWithSchema(CreateInviteDtoSchema, req.body);
+		if (errors) {
+			return res.status(400).json(errors.toJson());
+		}
+		const values = castWithSchema(CreateInviteDtoSchema, req.body);
+		try {
+			await eventsService.createEventInvite(
+				req.user!.userId,
+				req.params.eventId,
+				values.username
+			);
+			res.status(201).end();
+		} catch (e) {
+			if (e instanceof ValidationError) {
+				return res.status(400).json(e.toJson());
+			}
+			return res.status(500).json({ message: "Internal server error" });
+		}
 	})
 );
 

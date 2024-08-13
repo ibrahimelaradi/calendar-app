@@ -85,6 +85,11 @@ export class EventFormComponent implements OnChanges {
       changes['event'].currentValue &&
       changes['event'].currentValue !== changes['event'].previousValue
     ) {
+      if (!changes['event'].currentValue.owned) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
       const start = dayjs(changes['event'].currentValue.startDate);
       const end = dayjs(changes['event'].currentValue.endDate);
       const allDay =
@@ -98,6 +103,7 @@ export class EventFormComponent implements OnChanges {
       ]) as any; // FIXME Don't use any, try to stop typescript from complaining instead :')
       this.form.setValue({ ...values, allDay });
     } else if (changes['event'] && !changes['event'].currentValue) {
+      this.form.enable();
       this.form.reset({
         title: '',
         description: '',

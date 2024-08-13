@@ -18,7 +18,9 @@
   (click)="onBackdropClick()"
 ></div>
 <div class="drawer" [class.open]="drawerOpen">
-  <div class="flex-1"></div>
+  <div class="flex-1">
+    <app-invites-list (inviteAccepted)="(inviteAccepted)"></app-invites-list>
+  </div>
   <button
     tuiButton
     appearance="secondary-destructive"

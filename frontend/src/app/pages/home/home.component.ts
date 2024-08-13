@@ -17,6 +17,9 @@ import { EventsListModule } from '../../components/events-list/events-list.modul
 import { LayoutModule } from '../../components/layout/layout.module';
 import { MonthSliderComponent } from '../../components/month-slider/month-slider.component';
 import { EmptyArrayIfNullPipe } from '../../pipes/empty-array-if-null.pipe';
+import { InvitePromptComponent } from '../../components/invite-prompt/invite-prompt.component';
+import { CreateInviteDto } from '@calendar-app/schemas/dtos/invites.dto';
+import { ClientError } from '../../client/client-error';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +34,7 @@ import { EmptyArrayIfNullPipe } from '../../pipes/empty-array-if-null.pipe';
     EventsListModule,
     MonthSliderComponent,
     TuiSvgModule,
+    InvitePromptComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -138,5 +142,18 @@ export class HomeComponent implements OnInit {
 
   onSearchClick() {
     this.router.navigate(['/search']);
+  }
+
+  onInviteUser(values: CreateInviteDto) {
+    this.client.createInvite(this.lastSelectedEvent!.id, values).subscribe({
+      complete: () => {
+        alert('Invite sent!');
+      },
+      error: (err) => {
+        if (err instanceof ClientError) {
+          alert(err.message);
+        }
+      },
+    });
   }
 }

@@ -39,6 +39,30 @@ declare module "knex/types/tables" {
 		>
 	> &
 		Pick<UserEvent, "updatedAt">;
+
+	interface Invite {
+		id: string;
+		inviterId: string;
+		eventId: string;
+		inviteeId: string;
+		status: "pending" | "accepted" | "rejected";
+		createdAt: Date;
+	}
+	type InviteInsert = Pick<User, "inviterId" | "inviteeId" | "eventId"> &
+		Partial<Pick<User, "status">>;
+	type InviteUpdate = Partial<Pick<User, "status">>;
+
+	interface EventInvite {
+		id: string;
+		inviterId: string;
+		inviterFullName: string;
+		inviteeId: string;
+		status: "pending" | "accepted" | "rejected";
+		eventTitle: string;
+		eventStartDate: Date;
+		eventEndDate: Date;
+	}
+
 	interface Tables {
 		users: Knex.CompositeTableType<User, UserInsert, UserUpdate>;
 		events: Knex.CompositeTableType<
@@ -46,6 +70,8 @@ declare module "knex/types/tables" {
 			UserEventInsert,
 			UserEventUpdate
 		>;
+		invites: Knex.CompositeTableType<Invite, InviteInsert, InviteUpdate>;
+		event_invites: EventInvite;
 	}
 }
 

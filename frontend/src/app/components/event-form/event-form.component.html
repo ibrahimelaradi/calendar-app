@@ -57,6 +57,7 @@
   <tui-checkbox-labeled formControlName="isPublic" size="l">
     Public?
   </tui-checkbox-labeled>
-
+  @if (!event || event.owned) {
   <button tuiButton type="submit" class="mt-4">{{ submitButtonLabel }}</button>
+  }
 </form>

@@ -1,4 +1,7 @@
-<app-layout [sideModalOpen]="eventFormOpen">
+<app-layout
+  [sideModalOpen]="eventFormOpen"
+  (inviteAccepted)="fetchEventsBasedOnCurrentRange()"
+>
   <app-bar-actions
     class="h-full flex-1 flex flex-row items-stretch justify-between"
   >
@@ -37,13 +40,18 @@
   }
   <app-side-modal>
     <h1 class="text-xl font-bold text-brand-dark mb-4">
-      @if (lastSelectedEvent) { Edit an Event } @else { Create an Event }
+      @if (lastSelectedEvent && lastSelectedEvent.owned) { Edit Event } @if
+      (lastSelectedEvent && !lastSelectedEvent.owned) { Event Details } @if
+      (!lastSelectedEvent) { Create Event }
     </h1>
     <app-event-form
       [date]="lastSelectedDate"
       [event]="lastSelectedEvent"
       (submitEventParams)="onEventFormSubmit($event)"
     ></app-event-form>
+    @if (lastSelectedEvent && lastSelectedEvent.owned) {
+    <app-invite-prompt (invite)="onInviteUser($event)"></app-invite-prompt>
+    }
     <button
       tuiButton
       appearance="secondary-destructive"

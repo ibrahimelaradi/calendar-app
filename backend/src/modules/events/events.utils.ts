@@ -11,7 +11,16 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 		}
 		if (filters.userId) {
 			query = query.where(function () {
-				this.where("userId", filters.userId).orWhere("isPublic", true);
+				this.where("userId", filters.userId)
+					.orWhere("isPublic", true)
+					.orWhereExists(function () {
+						// Include events shared with this user
+						this.select("*")
+							.from("invites")
+							.whereRaw('invites."eventId" = events.id')
+							.andWhere("invites.inviteeId", filters.userId)
+							.andWhere("status", "accepted");
+					});
 			});
 		}
 		if (filters.search) {
