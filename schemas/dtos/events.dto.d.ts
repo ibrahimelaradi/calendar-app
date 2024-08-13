@@ -26,6 +26,7 @@ export declare const EventDtoSchema: import("@sinclair/typebox").TObject<{
     endDate: import("@sinclair/typebox").TTransform<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TDate, import("@sinclair/typebox").TString]>, Date>;
     isReoccurring: import("@sinclair/typebox").TBoolean;
     isPublic: import("@sinclair/typebox").TBoolean;
+    owned: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
     createdAt: import("@sinclair/typebox").TTransform<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TDate, import("@sinclair/typebox").TString]>, Date>;
     updatedAt: import("@sinclair/typebox").TTransform<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TDate, import("@sinclair/typebox").TString]>, Date>;
 }>;

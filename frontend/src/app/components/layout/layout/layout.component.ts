@@ -10,6 +10,7 @@ import { AuthService } from '../../../auth/auth.service';
 export class LayoutComponent {
   @Input() sideModalOpen = false;
   @Output() backdropClick = new EventEmitter();
+  @Output() inviteAccepted = new EventEmitter();
 
   constructor(private auth: AuthService, private router: Router) {}
 

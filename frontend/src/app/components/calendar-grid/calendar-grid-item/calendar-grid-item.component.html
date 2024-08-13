@@ -13,6 +13,7 @@
     <div
       class="calendar-event"
       [class.reoccurring]="event.isReoccurring"
+      [class.unowned]="!event.owned"
       (click)="onEventClick($event, event)"
     >
       {{ event.title }}

@@ -26,3 +26,6 @@
 .calendar-event.reoccurring {
   @apply border border-info bg-info-light text-brand-dark hover:bg-info/80;
 }
+.calendar-event.unowned {
+  @apply border border-danger-dark bg-danger-light hover:bg-danger/80 text-brand-dark;
+}

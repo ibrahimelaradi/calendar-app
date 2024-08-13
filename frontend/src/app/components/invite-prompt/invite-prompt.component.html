@@ -1,0 +1,12 @@
+<form
+  class="mt-4 w-full grid grid-cols-5 gap-x-2"
+  (ngSubmit)="onSubmit()"
+  [formGroup]="form"
+>
+  <div class="col-span-4">
+    <tui-input class="w-full" formControlName="username"
+      >Enter username</tui-input
+    >
+  </div>
+  <button type="submit" tuiButton>Invite</button>
+</form>

@@ -28,6 +28,7 @@ exports.EventDtoSchema = typebox_1.Type.Object({
     endDate: common_1.StringDate,
     isReoccurring: typebox_1.Type.Boolean(),
     isPublic: typebox_1.Type.Boolean(),
+    owned: typebox_1.Type.Optional(typebox_1.Type.Boolean()),
     createdAt: common_1.StringDate,
     updatedAt: common_1.StringDate,
 });

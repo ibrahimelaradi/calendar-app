@@ -34,6 +34,8 @@ export const EventDtoSchema = Type.Object({
 
 	isPublic: Type.Boolean(),
 
+	owned: Type.Optional(Type.Boolean()),
+
 	createdAt: StringDate,
 	updatedAt: StringDate,
 });

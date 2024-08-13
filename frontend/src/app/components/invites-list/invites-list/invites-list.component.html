@@ -1,0 +1,12 @@
+<div class="w-full h-full flex flex-col gap-y-2">
+  <h1 class="text-2xl font-bold text-brand-dark">Event Invitations</h1>
+  @for (invite of invites$ | async | emptyArrayIfNull; track invite.id) {
+  <app-invites-list-item
+    [invite]="invite"
+    (accept)="onAcceptInvite(invite.id)"
+    (reject)="onRejectInvite(invite.id)"
+  ></app-invites-list-item>
+  } @if ((invites$ | async | emptyArrayIfNull).length === 0) {
+  <p class="text-lg text-brand-dark">No pending invites..</p>
+  }
+</div>

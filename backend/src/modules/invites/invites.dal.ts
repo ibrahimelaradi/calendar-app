@@ -5,19 +5,19 @@ import { invitesFiltersQueryBuilder } from "./invites.utils";
 
 const invitesDal = {
 	async getInviteById(id: string) {
-		return await db.table("invites").where("id", id).first();
+		return await db.table("event_invites").where("id", id).first();
 	},
 	async getInvitesByUserId(userId: string, filters: Filters) {
 		filters.inviterId = userId;
 		return await db
-			.table("invites")
+			.table("event_invites")
 			.where(invitesFiltersQueryBuilder(filters))
 			.select("*");
 	},
 	async getInvitesForUserId(userId: string, filters: Filters) {
 		filters.inviteeId = userId;
 		return await db
-			.table("invites")
+			.table("event_invites")
 			.where(invitesFiltersQueryBuilder(filters))
 			.select("*");
 	},

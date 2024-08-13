@@ -11,11 +11,17 @@ export async function up(knex: Knex): Promise<void> {
 			.inTable("events")
 			.onDelete("CASCADE");
 		table
-			.uuid("userId")
+			.uuid("inviteeId")
 			.notNullable()
 			.references("id")
 			.inTable("users")
 			.onDelete("CASCADE");
+		table
+			.uuid("inviterId")
+			.references("id")
+			.inTable("users")
+			.onDelete("CASCADE")
+			.onUpdate("CASCADE");
 
 		table
 			.enum("status", ["pending", "accepted", "rejected"])
@@ -23,7 +29,7 @@ export async function up(knex: Knex): Promise<void> {
 
 		table.timestamp("createdAt").defaultTo(knex.fn.now());
 
-		table.unique(["eventId", "userId"], { indexName: "idx_event_user" });
+		table.unique(["eventId", "inviteeId"], { indexName: "idx_event_user" });
 	});
 }
 

@@ -4,7 +4,10 @@ import { Tables } from "knex/types/tables";
 
 export function invitesFiltersQueryBuilder(filters: Filters) {
 	return (
-		builder: Knex.QueryBuilder<Tables["invites"], Tables["invites"][]>
+		builder: Knex.QueryBuilder<
+			Tables["event_invites"],
+			Tables["event_invites"][]
+		>
 	) => {
 		let query = builder;
 		if (filters.eventId) {

@@ -17,8 +17,8 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 						// Include events shared with this user
 						this.select("*")
 							.from("invites")
-							.where("eventId", "events.id")
-							.andWhere("inviteeId", filters.userId)
+							.whereRaw('invites."eventId" = events.id')
+							.andWhere("invites.inviteeId", filters.userId)
 							.andWhere("status", "accepted");
 					});
 			});
