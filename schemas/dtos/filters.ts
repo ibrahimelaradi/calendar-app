@@ -7,6 +7,10 @@ export const FiltersSchema = Type.Object({
 	toDate: Type.Optional(StringDate),
 	userId: Type.Optional(Type.String()),
 	eventId: Type.Optional(Type.String()),
+	page: Type.Optional(Type.Number()),
+	pageSize: Type.Optional(Type.Number()),
+	order: Type.Optional(Type.String()),
+	orderBy: Type.Optional(Type.String()),
 });
 
 export type Filters = Static<typeof FiltersSchema>;

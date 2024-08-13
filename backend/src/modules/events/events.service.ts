@@ -8,6 +8,10 @@ import dayjs from "dayjs";
 import { UserEvent } from "knex/types/tables";
 
 const eventsService = {
+	async countUserEvents(userId: string, filters: Filters) {
+		filters.userId = userId;
+		return await eventsDal.countEvents(filters);
+	},
 	async getUserEvents(userId: string, filters: Filters) {
 		filters.userId = userId;
 		return await eventsDal.getEvents(filters);

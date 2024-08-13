@@ -5,6 +5,7 @@ import type {
   SignupParams,
   UserDto,
 } from '@calendar-app/schemas/dtos/auth.dto';
+import { Paged } from '@calendar-app/schemas/dtos/common';
 import {
   CreateEventParams,
   EventDto,
@@ -40,8 +41,14 @@ export class ClientService {
     return this.client.get<UserDto>(`${this.baseUrl}/auth/profile`);
   }
 
+  getCalendarEvents(filters: Filters) {
+    return this.client.get<EventDto[]>(`${this.baseUrl}/events/calendar`, {
+      params: filters as Record<string, string>,
+    });
+  }
+
   getEvents(filters: Filters) {
-    return this.client.get<EventDto[]>(`${this.baseUrl}/events`, {
+    return this.client.get<Paged<EventDto>>(`${this.baseUrl}/events/search`, {
       params: filters as Record<string, string>,
     });
   }

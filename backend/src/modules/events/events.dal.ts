@@ -17,10 +17,14 @@ const eventsDal = {
 		return res?.count || 0;
 	},
 	async getEvents(filters: Filters) {
-		return await db
-			.table("events")
-			.where(eventsFiltersQueryBuilder(filters))
-			.select("*");
+		let query = db.table("events").where(eventsFiltersQueryBuilder(filters));
+		if (filters.page !== undefined && filters.pageSize !== undefined) {
+			query = query
+				.limit(filters.pageSize)
+				.offset((filters.page - 1) * filters.pageSize)
+				.orderBy(filters.orderBy || "createdAt", filters.order || "desc");
+		}
+		return await query.select("*");
 	},
 	async getEventById(id: string) {
 		return await db.table("events").where("id", id).first();

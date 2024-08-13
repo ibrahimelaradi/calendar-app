@@ -10,10 +10,18 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 			query = query.where("id", filters.eventId);
 		}
 		if (filters.userId) {
-			query = query.where("userId", filters.userId);
+			query = query.where(function () {
+				this.where("userId", filters.userId).orWhere("isPublic", true);
+			});
 		}
 		if (filters.search) {
-			query = query.where("title", "like", `%${filters.search}%`);
+			query = query.where(function () {
+				this.where("title", "like", `%${filters.search}%`).orWhere(
+					"description",
+					"like",
+					`%${filters.search}%`
+				);
+			});
 		}
 		if (filters.fromDate) {
 			const month = dayjs(filters.fromDate).month() + 1;

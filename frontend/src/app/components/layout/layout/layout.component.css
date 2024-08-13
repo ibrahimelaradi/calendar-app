@@ -2,11 +2,6 @@ nav {
   @apply bg-brand h-16 flex flex-row items-center justify-stretch p-2;
 }
 
-.nav-btn {
-  @apply aspect-square flex items-center justify-center h-full text-white rounded-full bg-white bg-opacity-0
-    transition-colors hover:bg-opacity-10;
-}
-
 .drawer {
   @apply h-[calc(100vh-4rem)] fixed top-[4rem] start-0 w-72 bg-brand-light flex flex-col items-stretch justify-stretch p-2 z-10
     transition-transform duration-300 ease-in-out -translate-x-full;
@@ -45,12 +40,10 @@ main {
   @apply opacity-100 pointer-events-auto;
 }
 
+#appbar-actions {
+  @apply flex-1 h-full;
+}
+
 .drawer-togle-container {
   @apply w-[calc(18rem-0.5rem)] h-full;
-}
-.date-filter-container {
-  @apply h-full flex-1 flex flex-row items-center gap-x-2;
-}
-.date-filter-container p {
-  @apply min-w-40 text-xl font-bold text-white select-none;
 }
