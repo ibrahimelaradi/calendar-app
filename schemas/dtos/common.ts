@@ -6,3 +6,8 @@ export const StringDate = Type.Transform(
 )
 	.Decode((date) => dayjs(date).toDate())
 	.Encode((date) => dayjs(date).format());
+
+export interface Paged<T> {
+	items: T[];
+	count: number;
+}

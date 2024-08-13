@@ -5,6 +5,7 @@ import type {
   SignupParams,
   UserDto,
 } from '@calendar-app/schemas/dtos/auth.dto';
+import { Paged } from '@calendar-app/schemas/dtos/common';
 import {
   CreateEventParams,
   EventDto,
@@ -47,7 +48,7 @@ export class ClientService {
   }
 
   getEvents(filters: Filters) {
-    return this.client.get<EventDto[]>(`${this.baseUrl}/events/search`, {
+    return this.client.get<Paged<EventDto>>(`${this.baseUrl}/events/search`, {
       params: filters as Record<string, string>,
     });
   }

@@ -2,12 +2,36 @@
   <app-bar-actions
     class="h-full flex-1 flex flex-row items-stretch justify-between"
   >
-    <div class="w-80">
-      <tui-input>
-        Search
-        <input placeholder="اكتب الاستعلام الخاص بك" tuiTextfield />
+    <div class="flex-1 pb-8">
+      <tui-input
+        tuiTextfieldSize="m"
+        tuiMode="onDark"
+        tuiTextfieldIcon="tuiIconSearch"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input
+          placeholder="Search events.."
+          tuiTextfield
+          (keyup)="search(getValue($event))"
+        />
       </tui-input>
     </div>
   </app-bar-actions>
-  <p>search works!</p>
+  <div class="flex-1 overflow-y-scroll h-full">
+    <app-events-list
+      [events]="events$ | async | pageItems | emptyArrayIfNull"
+    ></app-events-list>
+    @if ((events$ | async | itemCount) === 0) {
+    <div class="w-full flex flex-col items-stretch justify-start px-8">
+      <tui-notification> No events found</tui-notification>
+    </div>
+    }
+    <div class="flex flex-row justify-end">
+      <tui-pagination
+        [length]="(events$ | async | itemCount) / (filters.pageSize || 1)"
+        [index]="(filters.page || 1) - 1"
+        (indexChange)="onPageIndexChange($event)"
+      ></tui-pagination>
+    </div>
+  </div>
 </app-layout>

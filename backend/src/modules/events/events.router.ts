@@ -49,16 +49,21 @@ eventsRouter.get(
 	"/search",
 	protect(async (req, res) => {
 		const filters = decodeWithSchema(FiltersSchema, req.query);
-		const events = await eventsService.getUserEvents(req.user!.userId, filters);
 		if (!filters.page || !filters.pageSize) {
 			const err = new ValidationError("Invalid resource filters")
 				.addError("page", "This parameter is required")
 				.addError("pageSize", "This parameter is required");
 			return res.status(400).json(err.toJson());
 		}
-		res
-			.status(200)
-			.json(events.map(encodeWithSchema.bind(undefined, EventDtoSchema)));
+		const events = await eventsService.getUserEvents(req.user!.userId, filters);
+		const count = await eventsService.countUserEvents(
+			req.user!.userId,
+			filters
+		);
+		res.status(200).json({
+			items: events.map(encodeWithSchema.bind(undefined, EventDtoSchema)),
+			count,
+		});
 	})
 );
 

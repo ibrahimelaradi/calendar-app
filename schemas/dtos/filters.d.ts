@@ -7,5 +7,7 @@ export declare const FiltersSchema: import("@sinclair/typebox").TObject<{
     eventId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString>;
     page: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     pageSize: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
+    order: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString>;
+    orderBy: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString>;
 }>;
 export type Filters = Static<typeof FiltersSchema>;

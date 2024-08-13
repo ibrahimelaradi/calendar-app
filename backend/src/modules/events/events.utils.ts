@@ -10,7 +10,9 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 			query = query.where("id", filters.eventId);
 		}
 		if (filters.userId) {
-			query = query.where("userId", filters.userId);
+			query = query.where(function () {
+				this.where("userId", filters.userId).orWhere("isPublic", true);
+			});
 		}
 		if (filters.search) {
 			query = query.where(function () {
@@ -60,12 +62,6 @@ export function eventsFiltersQueryBuilder(filters: Filters) {
 					);
 				});
 			});
-		}
-		if (filters.page && filters.pageSize) {
-			query = query
-				.limit(filters.pageSize)
-				.offset((filters.page - 1) * filters.pageSize)
-				.orderBy(filters.orderBy || "createdAt", filters.order || "desc");
 		}
 		return query;
 	};
